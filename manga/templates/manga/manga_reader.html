@@ -1,0 +1,74 @@
+{% load static %}
+{% load manga_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'manga/css/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'manga/css/font-awesome.css' %}">
+    <title>Reader</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__container container">
+            <nav class="header__menu menu">
+                <ul class="menu__list">
+                    <li class="menu__item menu__login-form">
+                        <form method="post" class="login-form">
+                            <input class="login-form__input input" name="login" type="text" placeholder="Логин">
+                            <input class="login-form__input input" name="password" type="password" placeholder="Пароль">
+                            <button class="login-form__button button" type="submit">Войти</button>
+                            <a href="" class="login-form__button button">Регистрация</a>
+                        </form>
+                    </li>
+                    <li class="menu__item menu__about">
+                        <a href="" class="menu__link">О проекте</a>
+                        <a href="" class="menu__link">Контакты</a>
+                    <li class="menu__item menu__search-form">
+                        <form action="/" method="get" class="search-form">
+                            <input class="search-form__input input" name="manga-title" type="text"
+                                placeholder="Поиск манги">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+            <a href="{% url 'index' %}">
+                <img src="{% static 'manga/img/header.avif' %}" alt="header image" class="header__img">
+            </a>
+        </div>
+    </header>
+    <main class="main">
+        <div class="main__container container">
+            <section class="main__content">
+                <div class="manga-reader">
+                    {% for image in manga.images.all %}
+                    <div class="manga-reader__wrap">
+                        <img class="manga-reader__image" src="{{ image.image.url }}" alt="">
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="main__side">
+                {% block side %}
+
+                {% endblock %}
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__container container">
+
+        </div>
+    </footer>
+</body>
+
+</html>

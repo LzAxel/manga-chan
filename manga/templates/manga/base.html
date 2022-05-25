@@ -1,0 +1,91 @@
+{% load static %}
+{% load manga_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'manga/css/index.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'manga/css/font-awesome.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'manga/js/script.js' %}"></script>
+    <title>MangaChan</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__container container">
+            <nav class="header__menu menu">
+                <a class="menu__logo" href="{% url 'index' %}">MangaChan</a>
+                <form action="/" method="get" class="search-form">
+                    <input class="search-form__input input" name="search" type="text" placeholder="Поиск манги"
+                        value="{{ request.GET.search }}">
+                </form>
+                <ul class="menu__list">
+                    <li class="menu__item">
+                        <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="" class="menu__link">Войти</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="" class="menu__link menu__link_outline">Регистрация</a>
+                    </li>
+                    
+                </ul>
+                <div class="menu__burger">
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <div class="main__container container">
+            <section class="main__content">
+                {% block content %}
+
+                {% endblock %}
+            </section>
+            <section class="main__side">
+                <div class="main__tag-list tag-list">
+                    <div class="lag-list__title">
+                        {% if manga_tags %}
+                        <h3>Тэги манги</h3>
+                        {% else %}
+                        <h3>Тэги</h3>
+                        {% endif %}
+                    </div>
+                    <ul class="tag-list__body">
+                        {% if manga_tags %}
+                        {% get_tags manga as tags %}
+                        {% else %}
+                        {% get_tags as tags %}
+                        {% endif %}
+                        {% for tag in tags %}
+                        <li class="tag-list__item">
+                            <a href="" class="tag-list__link">+</a>
+                            <a href="" class="tag-list__link">-</a>
+                            <span>{{ tag.name }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__container container">
+
+        </div>
+    </footer>
+</body>
+
+</html>
