@@ -37,8 +37,8 @@ body {
     height: 100%;
     line-height: 1;
     font-size: 16px;
-    color: black;
-    background-color: #E4E7EE;
+    color: var(--text-color);
+    background-color: var(--background-color);
     font-family: 'Open Sans', sans-serif;
     position: relative;
 }
@@ -46,4 +46,5 @@ body {
 button {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
+    cursor: pointer;
 }

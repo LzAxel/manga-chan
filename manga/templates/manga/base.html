@@ -8,7 +8,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="{% static 'manga/css/index.css' %}">
+
+    <script>
+        if (window.matchMedia('(prefers-color-scheme: dark)').media === 'not all') {
+          document.documentElement.style.display = 'none';
+          document.head.insertAdjacentHTML(
+            'beforeend',
+            '<link rel="stylesheet" href="{% static "manga/css/light-theme.css" %}" onload="document.documentElement.style.display = \'\'">',
+          );
+        }
+      </script>
+    
+    <link rel="stylesheet" href="{% static 'manga/css/light-theme.css' %}"
+    media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="{% static 'manga/css/dark-theme.css' %}"
+    media="(prefers-color-scheme: dark)">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'manga/js/script.js' %}"></script>
     <title>MangaChan</title>
@@ -49,28 +65,25 @@
                 {% endblock %}
             </section>
             <section class="main__side">
-                <div class="main__tag-list tag-list">
-                    <div class="lag-list__title">
-                        {% if manga_tags %}
-                        <h3>Тэги манги</h3>
-                        {% else %}
-                        <h3>Тэги</h3>
-                        {% endif %}
-                    </div>
+                <div class="tag-list">
+                    {% if manga_tags %}
+                    <h1 class="tag-list__title">Тэги манги</h1>
+                    {% else %}
+                    <h1 class="tag-list__title">Все Тэги</h1>
+                    {% endif %}
                     <ul class="tag-list__body">
-                        {% if manga_tags %}
-                        {% get_tags manga as tags %}
-                        {% else %}
                         {% get_tags as tags %}
-                        {% endif %}
-                        {% for tag in tags %}
-                        <li class="tag-list__item">
-                            <a href="" class="tag-list__link">+</a>
-                            <a href="" class="tag-list__link">-</a>
-                            <span>{{ tag.name }}</span>
-                        </li>
-                        {% endfor %}
+                        <form action="/" method="get" class="tag-list__form">
+                            {% for tag in tags %}
+                            <li class="tag-list__item">
+                                <input type="checkbox">
+                                <label>{{ tag.name }}</label>
+                            </li>
+                            {% endfor %}
+                            <button type="submit" class="tag-list__button">Применить</button>
+                        </form>
                     </ul>
+                    
                 </div>
             </section>
         </div>

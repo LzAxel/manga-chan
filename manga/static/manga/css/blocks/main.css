@@ -2,10 +2,22 @@
     max-width: 1000px;
     padding: 10px 10px;
     margin: 0 auto;
-}
-
-.main__content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     column-gap: 5px;
+    justify-content: space-between;
+
+}
+.main__content {
+    width: 100%;
+}
+.main__side {
+    background-color: var(--item-color);
+    border-radius: 5px;
+    padding: 7px 5px;
+}
+@media (max-width: 629px) {
+    .main__side {
+        display: none;
+    }
 }
