@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="add-manga">
-    <form action="{% url 'add_manga' %}" method="post" class="add-manga__form add-manga-form"
+    <form action="{% url 'add_manga' %}" method="post" class="manga-form"
         enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         {{ field }}
         {% endfor %}
-        <button class="button add-manga__button" type="submit">Добавить</button>
+        <button class="button manga-form__button" type="submit">Добавить</button>
     </form>
 </div>
 
