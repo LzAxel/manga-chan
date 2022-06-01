@@ -3,40 +3,58 @@
 {% load manga_tags %}
 
 {% block content %}
-<div class="manga__preview">
-    {% for image in manga.images.all|slice:":2" %}
-    <img class="manga__image" src="{{ image.image.url }}" alt="">
-    {% endfor %}
-</div>
-<div class="manga__info">
-    <div class="manga__name">
-        <a href="{{ manga.get_absolute_url }}">
-            <h1>{{ manga.name }}</h1>
-        </a>
+<div class="manga__item manga-about__item">
+    <div class="manga__preview manga-about__preview">
+        <img class="manga__image manga-about__image" src="{{ manga.images.first.image.url }}" alt="">
+        <img class="manga-about__image-background" src="{{ manga.images.first.image.url }}" alt="">
     </div>
-    <div class="manga__about">
-        <div class="manga__stats manga-stats">
-            <div class="manga-stats__item">
-                <i class="fa fa-eye" aria-hidden="true"></i>
-                <span>{{ manga.views }}</span>
-            </div>
-            <button class="manga-stats__item like-button">
-                <i class="fa fa-heart-o" aria-hidden="true"></i>
-                <span>{{ manga.likes.all.count }}</span>
-            </button>
+    <div class="manga__info manga-about__info">
+        <div class="manga__name manga-about__name">
+            <a href="{{ manga.get_absolute_url }}">
+                {% if manga.original_name %}
+                    <h1>{{ manga.name }} <span>({{ manga.original_name }})</span></h1>
+                {% else %}
+                    <h1>{{ manga.name }}</h1>
+                {% endif %}
+            </a>
         </div>
-        <p class="manga__text">Автор: <a class="manga__link">{{ manga.author }}</a></p>
-        <p class="manga__text">Серия: <a class="manga__link">{{ manga.series }}</a></p>
-        <p class="manga__text">Язык: <a class="manga__link">{{ manga.language }}</a></p>
-        <ul class="manga__tag-list">Теги:
-            {% get_tags manga as manga_tags %}
-            {% for tag in manga_tags|slice:":10" %}
-            <li class="manga__tag-item">
-                <a class="manga__link" href="#">{{tag.name}}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="manga__about">
+            <div class="manga__stats manga-stats">
+                <div class="manga-stats__item">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <span>{{ manga.views }}</span>
+                </div>
+                <button class="manga-stats__item like-button">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    <span>{{ manga.likes.all.count }}</span>
+                </button>
+            </div>
+            <p class="manga__text">Автор: <a class="manga__link">{{ manga.author }}</a></p>
+            <p class="manga__text">Серия: <a class="manga__link">{{ manga.series }}</a></p>
+            <p class="manga__text">Язык: <a class="manga__link">{{ manga.language }}</a></p>
+            <ul class="manga__tag-list">Теги:
+                {% get_tags manga as manga_tags %}
+                {% for tag in manga_tags|slice:":10" %}
+                <li class="manga__tag-item">
+                    <a class="manga__link" href="#">{{tag.name}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <p class="manga__text">Описание:</p>
+            <div class="manga-about__description">
+                {{manga.description|linebreaks}}
+            </div>
+        <div class="manga-about__uploader">
+            <p class="manga__text">Загрузил: <a class="manga__link">{{ manga.uploader }}</a></p>
+            <p class="manga__text">Дата загрузки: <a class="manga__link">{{ manga.upload_date }}</a></p>
+        </div>
     </div>
-
+    <div class="manga-about__actions">
+        <a href="{% url 'read' manga.slug %}?page=1" class="manga-about__button manga-about__button--outline">Читать мангу</a>
+        <a href="{{ manga.zip.url }}" class="manga-about__button">Скачать мангу</a>
+        <a href="" class="manga-about__button">Похожая манга</a>
+    </div>
+   
 </div>
 {% endblock %}

@@ -25,37 +25,12 @@
     media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="{% static 'manga/css/dark-theme.css' %}"
     media="(prefers-color-scheme: dark)">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{% static 'manga/js/script.js' %}"></script>
     <title>MangaChan</title>
 </head>
 
 <body>
     <header class="header">
-        <div class="header__container container">
-            <nav class="header__menu menu">
-                <a class="menu__logo" href="{% url 'index' %}">MangaChan</a>
-                <form action="/" method="get" class="search-form">
-                    <input class="search-form__input input" name="search" type="text" placeholder="Поиск манги"
-                        value="{{ request.GET.search }}">
-                </form>
-                <ul class="menu__list">
-                    <li class="menu__item">
-                        <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="" class="menu__link">Войти</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="" class="menu__link menu__link_outline">Регистрация</a>
-                    </li>
-                    
-                </ul>
-                <div class="menu__burger">
-                    <span></span>
-                </div>
-            </nav>
-        </div>
+        {% include 'manga/header.html' %}
     </header>
     <main class="main">
         <div class="main__container container">
@@ -64,27 +39,8 @@
 
                 {% endblock %}
             </section>
-            <section class="main__side">
-                <div class="tag-list">
-                    {% if manga_tags %}
-                    <h1 class="tag-list__title">Тэги манги</h1>
-                    {% else %}
-                    <h1 class="tag-list__title">Все Тэги</h1>
-                    {% endif %}
-                    <ul class="tag-list__body">
-                        {% get_tags as tags %}
-                        <form action="/" method="get" class="tag-list__form">
-                            {% for tag in tags %}
-                            <li class="tag-list__item">
-                                <input type="checkbox">
-                                <label>{{ tag.name }}</label>
-                            </li>
-                            {% endfor %}
-                            <button type="submit" class="tag-list__button">Применить</button>
-                        </form>
-                    </ul>
-                    
-                </div>
+            <section class="main__sidebar sidebar">
+                
             </section>
         </div>
     </main>
@@ -93,6 +49,13 @@
 
         </div>
     </footer>
+    <script>
+        document.querySelector('.menu__burger').addEventListener('click', () => {
+            document.querySelector('.menu__list').classList.toggle('active');
+            document.querySelector('.menu__burger').classList.toggle('active');
+            document.querySelector('body').classList.toggle('lock');
+        });
+    </script>
 </body>
 
 </html>

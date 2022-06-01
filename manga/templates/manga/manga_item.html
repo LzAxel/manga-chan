@@ -5,14 +5,25 @@
     {% if manga.images %}
     <div class="manga__preview">
         {% for image in manga.images.all|slice:":2" %}
-        <img class="manga__image" src="{{ image.image.url }}" alt="">
+            {% if manga.nsfw %}
+                <img class="manga__image nsfw" src="{{ image.image.url }}" alt="">
+            {% else %}
+                <img class="manga__image" src="{{ image.image.url }}" alt="">
+            {% endif %}
         {% endfor %}
     </div>
     {% endif %}
     <div class="manga__info">
         <div class="manga__name">
             <a href="{{ manga.get_absolute_url }}">
-                <h1>{{ manga.name }}</h1>
+                {% if manga.original_name %}
+                    <p>{{ manga.name }} <span>({{ manga.original_name }})</span></p>
+                {% else %}
+                    <p>{{ manga.name }}</p>
+                {% endif %}
+                {% if manga.nsfw %}
+                    <span class="nsfw__label">NSFW</span>
+                {% endif %}
             </a>
         </div>
         <div class="manga__about">

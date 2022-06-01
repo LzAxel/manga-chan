@@ -1,0 +1,119 @@
+.manga-about__item {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    row-gap: 7px;
+    grid-template-areas: 
+    'preview info'
+    'actions info';
+}
+@media(max-width: 599px) {
+    .manga-about__item {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        'preview'
+        'actions'
+        'info';
+        row-gap: 15px;
+    }
+}
+.manga-about__preview{
+    grid-area: preview;
+}
+.manga-about__image {
+    width: 200px;
+    min-height: 250px;
+}
+.manga-about__image-background {
+    display: none;
+}
+@media(max-width: 599px) {
+    .manga-about__image {
+        max-height: 300px;
+        object-position: top;
+        position: relative;
+        z-index: 2;
+    }
+    .manga-about__preview{
+        padding: 10px 0;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    .manga-about__image-background{
+        top: 0;
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+        z-index: 1;
+        border-radius: 5px;
+        filter: opacity(0.1) blur(3px);
+        
+    }
+}
+.manga-about__name {
+    font-size: 18px;
+    line-height: 1.2;
+}
+.manga-about__description {
+    color: var(--item-text-color);
+    border-radius: 5px;
+    padding: 3px 4px;
+    background-color: var(--item-inner-color);
+    line-height: 1.2;
+    height: 100%;
+}
+.manga-about__description br {
+    margin-top: 7px;
+    display: block;
+    content: '';
+}
+.manga-about__actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    grid-area: actions;
+}
+@media(max-width: 599px) {
+    .manga-about__actions{
+        flex-direction: row;
+        column-gap: 5px;
+    }
+}
+.manga-about__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    background-color: var(--item-inner-color);
+    border-radius: 5px;
+    flex-grow: 1;
+}
+.manga-about__button:hover {
+    color: var(--text-color-alt);
+    background-color: var(--accent-color);
+}
+.manga-about__button--outline {
+    border: 2px solid var(--accent-color);
+    background-color: var(--item-color);
+}
+.manga-about__uploader {
+    border-radius: 5px;
+    padding: 5px 4px;
+    padding-bottom: 7px;
+    background-color: var(--item-inner-color);
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+.manga-about__info {
+    grid-area: info;
+    height: auto;
+}

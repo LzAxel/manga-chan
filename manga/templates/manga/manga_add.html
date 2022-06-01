@@ -1,5 +1,6 @@
 {% extends 'manga/base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block content %}
 <div class="add-manga">
@@ -7,7 +8,17 @@
         enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
-        {{ field }}
+            {% if field|is_checkbox %}
+                <label class="form__label">
+                    {{ field }}
+                    <span class="check__box">
+                        <i class="fa fa-check check__mark" aria-hidden="true"></i>
+                    </span>
+                    {{ field.label }}
+                </label>
+            {% else %}
+                {{ field }}
+            {% endif %}
         {% endfor %}
         <button class="button manga-form__button" type="submit">Добавить</button>
     </form>

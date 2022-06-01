@@ -4,8 +4,9 @@
 
 {% block content %}
 <div class="manga__list">
-    {% for manga in mangas %}
+    {% for manga in page_obj %}
     {% include 'manga/manga_item.html' %}
     {% endfor %}
 </div>
+{% include 'manga/pagination.html' %}
 {% endblock %}

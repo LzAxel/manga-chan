@@ -1,6 +1,5 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import *
@@ -10,6 +9,7 @@ from .models import Tag, Manga
 
 class MangaIndex(ListView):
     model = Manga
+    paginate_by = 5
     template_name = 'manga/index.html'
     context_object_name = 'mangas'
     
@@ -23,18 +23,26 @@ class MangaIndex(ListView):
         return queryset
 
 
-class MangaRead(DetailView):
+class MangaRead(ListView):
     model = Manga
-    
+    paginate_by = 1
     template_name = 'manga/manga_reader.html'
     slug_url_kwarg = 'manga_slug'
+    context_object_name = 'images'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        manga_slug = self.kwargs['manga_slug']
+        queryset = queryset.get(slug=manga_slug)
+        images = queryset.images.all()
+
+        return images
 
 
 class MangaDetail(DetailView):
     model = Manga
     template_name = 'manga/manga_about.html'
     slug_url_kwarg = 'manga_slug'
-
 
 
 class MangaAdd(CreateView):

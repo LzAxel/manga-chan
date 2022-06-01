@@ -3,8 +3,9 @@ from .models import Manga, MangaImage, User, Tag
 # Register your models here.
 
 class MangaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'author', 'uploader', 'upload_date')
+    list_display = ('id', 'name', 'nsfw', 'author', 'uploader', 'upload_date')
     list_display_links = ('id', 'name')
+    list_editable = ('nsfw',)
     search_fields = ('name', 'author', 'uploader')
     list_filter = ('upload_date', 'author', 'uploader')
 

@@ -1,74 +1,55 @@
+{% extends 'manga/base.html' %}
 {% load static %}
 {% load manga_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
+<div class="page__list">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'manga/css/base.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'manga/css/font-awesome.css' %}">
-    <title>Reader</title>
-</head>
-
-<body>
-    <header class="header">
-        <div class="header__container container">
-            <nav class="header__menu menu">
-                <ul class="menu__list">
-                    <li class="menu__item menu__login-form">
-                        <form method="post" class="login-form">
-                            <input class="login-form__input input" name="login" type="text" placeholder="Логин">
-                            <input class="login-form__input input" name="password" type="password" placeholder="Пароль">
-                            <button class="login-form__button button" type="submit">Войти</button>
-                            <a href="" class="login-form__button button">Регистрация</a>
-                        </form>
-                    </li>
-                    <li class="menu__item menu__about">
-                        <a href="" class="menu__link">О проекте</a>
-                        <a href="" class="menu__link">Контакты</a>
-                    <li class="menu__item menu__search-form">
-                        <form action="/" method="get" class="search-form">
-                            <input class="search-form__input input" name="manga-title" type="text"
-                                placeholder="Поиск манги">
-                        </form>
-                    </li>
+    <div class="page__item">
+        <img src="{{ images.0.image.url }}" alt="" class="page__image">
+        <div class="overlay-paginator">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="overlay-paginator__previous noSelect"></a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="overlay-paginator__next noSelect"></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="page__menu page-menu">
+        <div class="page-menu__container">
+            <nav class="page-menu__nav">
+                <ul class="page-menu__list">
+                    
+                        <li class="page-menu__item">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1" class="page-menu__link">
+                                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                            </a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="page-menu__link">
+                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                        </li>
+                    
+                        <li class="page-menu__count">
+                            {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+                        </li>
+                    
+                        <li class="page-menu__item">
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="page-menu__link">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-menu__link">
+                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                        </li>
                 </ul>
             </nav>
-            <a href="{% url 'index' %}">
-                <img src="{% static 'manga/img/header.avif' %}" alt="header image" class="header__img">
-            </a>
         </div>
-    </header>
-    <main class="main">
-        <div class="main__container container">
-            <section class="main__content">
-                <div class="manga-reader">
-                    {% for image in manga.images.all %}
-                    <div class="manga-reader__wrap">
-                        <img class="manga-reader__image" src="{{ image.image.url }}" alt="">
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
-            <section class="main__side">
-                {% block side %}
-
-                {% endblock %}
-            </section>
-        </div>
-    </main>
-    <footer class="footer">
-        <div class="footer__container container">
-
-        </div>
-    </footer>
-</body>
-
-</html>
+    </div>
+    
+</div>
+{% endblock %}

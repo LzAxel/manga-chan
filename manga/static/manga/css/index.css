@@ -4,6 +4,9 @@
 @import url("blocks/menu.css");
 @import url("blocks/main.css");
 @import url("blocks/manga.css");
+@import url("blocks/about_manga.css");
 @import url("blocks/tag-list.css");
 @import url("blocks/manga-form.css");
 @import url("blocks/sidebar.css");
+@import url("blocks/reader.css");
+@import url("blocks/nsfw-label.css");

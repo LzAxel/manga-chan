@@ -1,5 +1,6 @@
 from io import BytesIO
 from django.db import models
+from django.forms import ValidationError
 from django.urls import reverse
 from pytils.translit import slugify
 from zipfile import ZipFile
@@ -39,7 +40,7 @@ class Manga(models.Model):
     original_name = models.CharField("Оригинальное Название", max_length=150, blank=True)
     slug = models.SlugField("URL", max_length=255, unique=True, db_index=True)
     description = models.TextField("Описание", default="", blank=True)
-    zip = models.FileField("Архив с мангой", upload_to=manga_zip_location, null=False)
+    zip = models.FileField("Архив с мангой", upload_to=manga_zip_location, null=False, blank=True)
     series = models.CharField("Серия", max_length=100)
     author = models.CharField("Автор", max_length=100)
     language = models.CharField("Язык", max_length=100, choices = LANGUAGE_CHOICES)
@@ -49,6 +50,7 @@ class Manga(models.Model):
     uploader = models.ForeignKey("User", on_delete=models.CASCADE, verbose_name="Кто загрузил")
     upload_date = models.DateTimeField("Дата загрузки", auto_now_add=True)
     likes = models.ManyToManyField("User", related_name="liked_manga", verbose_name="Лайки", blank=True, default=[0])
+    nsfw = models.BooleanField("NSFW", default=False, null=False)
 
     def __str__(self):
         return self.name
@@ -57,37 +59,45 @@ class Manga(models.Model):
         return reverse('manga_about', kwargs={'manga_slug': self.slug})
     
     def save(self, *args, **kwargs):
-        self.pk = Manga.objects.count() + 1
+        if not self.pk:
+            try:
+                self.pk = Manga.objects.latest("pk").pk + 1
+            except SyntaxError:
+                self.pk = 1
+
         self.slug = f"{self.pk}-{slugify(self.name)}"
-        self.zip.name = f"{self.slug}.zip"
-        
-        if self.zip:
-            extansions = ['png', 'jpg', 'webp', 'jpeg', 'gif']
-            zip_file = ZipFile(self.zip)
-            files = sorted(zip_file.namelist(), key=lambda x: x.lstrip("0"))
-            self.pages = len([i.split('.')[-1] for i in files if i.split('.')[-1] in extansions])
-            super(Manga, self).save(*args, **kwargs)
-            for num, name in enumerate(files):
-                data = zip_file.read(name)
-                try:
-                    from PIL import Image
-                    image = Image.open(BytesIO(data))
-                    image.load()
-                    image = Image.open(BytesIO(data))
-                    image.verify()
-                except ImportError:
-                    pass
-                except:
-                    continue
-                name = f"{num}.{name.split('.')[-1]}"
-                print(name)
-                # You now have an image which you can save
-                path = manga_zip_location(self, name)
-                saved_path = default_storage.save(path, ContentFile(data))
-                self.images.create(image=saved_path)
-                
-                
-        
+        self.zip.name = f"{self.pk}-{self.slug}.zip"
+        try:
+            this = Manga.objects.get(pk=self.pk)
+            
+            if this.zip.url:
+                self.zip = this.zip
+                super(Manga, self).save(*args, **kwargs)
+        except:
+            if self.zip:
+                extansions = ['png', 'jpg', 'webp', 'jpeg', 'gif']
+                zip_file = ZipFile(self.zip)
+                files = sorted(zip_file.namelist(), key=lambda x: x.lstrip("0"))
+                self.pages = len([i.split('.')[-1] for i in files if i.split('.')[-1] in extansions])
+                super(Manga, self).save(*args, **kwargs)
+                for num, name in enumerate(files):
+                    data = zip_file.read(name)
+                    try:
+                        from PIL import Image
+                        image = Image.open(BytesIO(data))
+                        image.load()
+                        image = Image.open(BytesIO(data))
+                        image.verify()
+                    except ImportError:
+                        pass
+                    except:
+                        continue
+                    name = f"{num}.{name.split('.')[-1]}"
+                    print(name)
+
+                    path = manga_zip_location(self, name)
+                    saved_path = default_storage.save(path, ContentFile(data))
+                    self.images.create(image=saved_path)
     
     class Meta:
         verbose_name = "Манга"

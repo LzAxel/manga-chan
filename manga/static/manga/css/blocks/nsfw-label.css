@@ -1,0 +1,11 @@
+.nsfw {
+    filter: blur(7px);
+}
+.nsfw__label {
+    margin-top: 5px ;
+    margin-left: 2px;
+    padding: 0 3px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 2px tomato;
+    font-size: 13px;
+}

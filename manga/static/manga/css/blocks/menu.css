@@ -9,7 +9,7 @@
     font-family: 'Macondo', cursive;
     font-size: 19px;
     position: relative;
-    z-index: 3;
+    z-index: 5;
 }
 
 .menu__list {
@@ -29,7 +29,7 @@
         background-color: var(--item-color);
         flex-direction: column;
         align-items: flex-start;
-        z-index: 2;
+        z-index: 3;
         row-gap: 5px;
         padding: 0 5px;
         padding-top: 35px;
@@ -113,7 +113,7 @@
         display: block;
         position: relative;
         align-self: center;
-        z-index: 3;
+        z-index: 4;
     }
 
     .menu__burger.active::before {

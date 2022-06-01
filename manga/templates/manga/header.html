@@ -1,0 +1,24 @@
+<div class="header__container container">
+    <nav class="header__menu menu">
+        <a class="menu__logo" href="{% url 'index' %}">MangaChan</a>
+        <form action="/" method="get" class="search-form">
+            <input class="search-form__input input" name="search" type="text" placeholder="Поиск манги"
+                value="{{ request.GET.search }}">
+        </form>
+        <ul class="menu__list">
+            <li class="menu__item">
+                <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
+            </li>
+            <li class="menu__item">
+                <a href="" class="menu__link">Войти</a>
+            </li>
+            <li class="menu__item">
+                <a href="{% url 'signup' %}" class="menu__link menu__link_outline">Регистрация</a>
+            </li>
+            
+        </ul>
+        <div class="menu__burger">
+            <span></span>
+        </div>
+    </nav>
+</div>
