@@ -2,10 +2,13 @@
     filter: blur(7px);
 }
 .nsfw__label {
-    margin-top: 5px ;
+    display: inline-block;
+    margin-top: 5px;
     margin-left: 2px;
     padding: 0 3px;
+    padding-top: 2px;
     border-radius: 3px;
     box-shadow: 0 0 0 2px tomato;
     font-size: 13px;
+    height: 17px;
 }
