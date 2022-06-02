@@ -11,5 +11,6 @@ urlpatterns = [
     path('add_manga', MangaAdd.as_view(), name="add_manga"),
     path('login', Login.as_view(), name="login"),
     path('signup', SignUp.as_view(), name="signup"),
-    path('logout', user_logout, name='logout')
+    path('logout', user_logout, name='logout'),
+    path('like', LikeManga, name='like_manga')
 ]   

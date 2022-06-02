@@ -1,8 +1,9 @@
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 
@@ -82,6 +83,13 @@ class Login(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('index')
+
+@login_required()
+def LikeManga(request):
+    manga = get_object_or_404(Manga, pk=request.POST.get('manga_pk'))
+    manga.likes.add(request.user.profile.pk)
+
+    return redirect(manga.get_absolute_url())
 
 
 def user_logout(request):

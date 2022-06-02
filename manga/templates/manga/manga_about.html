@@ -24,10 +24,14 @@
                     <i class="fa fa-eye" aria-hidden="true"></i>
                     <span>{{ manga.views }}</span>
                 </div>
-                <button class="manga-stats__item like-button">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                    <span>{{ manga.likes.all.count }}</span>
-                </button>
+                <form action="{% url 'like_manga' %}" method="post">
+                    {% csrf_token %}
+                    <button class="manga-stats__item like-button" 
+                    value="{{ manga.pk }}" name="manga_pk" type="submit">
+                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        <span>{{ manga.get_likes_count }}</span>
+                    </button>
+                </form>
             </div>
             <p class="manga__text">Автор: <a class="manga__link">{{ manga.author }}</a></p>
             <p class="manga__text">Серия: <a class="manga__link">{{ manga.series }}</a></p>

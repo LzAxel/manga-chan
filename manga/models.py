@@ -61,6 +61,9 @@ class Manga(models.Model):
     def get_absolute_url(self):
         return reverse('manga_about', kwargs={'manga_slug': self.slug})
     
+    def get_likes_count(self):
+        return self.likes.count()
+    
     def save(self, *args, **kwargs):
         if not self.pk:
             try:
