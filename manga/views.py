@@ -1,6 +1,10 @@
 from django.db.models import Q
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
 
 from .forms import *
 from .models import Tag, Manga
@@ -48,3 +52,32 @@ class MangaDetail(DetailView):
 class MangaAdd(CreateView):
     form_class = MangaAddForm
     template_name = 'manga/manga_add.html'
+
+    def form_valid(self, form):
+        form.instance.uploader = self.request.user.profile
+        return super().form_valid(form)
+
+
+class ProfileDetail(DetailView):
+    model = Profile
+    template_name = 'manga/profile.html'
+    slug_url_kwarg = 'profile_slug'
+
+
+class SignUp(CreateView):
+    form_class = SignUpForm
+    template_name = 'manga/signup.html'
+    success_url = reverse_lazy('index')
+
+
+class Login(LoginView):
+    form_class = LoginForm
+    template_name = 'manga/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('index')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')

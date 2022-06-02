@@ -46,7 +46,7 @@
                 {{manga.description|linebreaks}}
             </div>
         <div class="manga-about__uploader">
-            <p class="manga__text">Загрузил: <a class="manga__link">{{ manga.uploader }}</a></p>
+            <p class="manga__text">Загрузил: <a class="manga__link" href="{{ manga.uploader.get_absolute_url }}">{{ manga.uploader }}</a></p>
             <p class="manga__text">Дата загрузки: <a class="manga__link">{{ manga.upload_date }}</a></p>
         </div>
     </div>

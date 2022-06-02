@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Manga, MangaImage, User, Tag
+from .models import Manga, MangaImage, Profile, Tag
 # Register your models here.
 
 class MangaAdmin(admin.ModelAdmin):
@@ -16,12 +16,12 @@ class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug', 'register_date', 'upload_amount', 'comment_amount')
-    list_display_links = ('id', 'name')
-    prepopulated_fields = {'slug': ('name',)}
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'slug', 'register_date', 'upload_amount', 'comment_amount')
+    list_display_links = ('id', 'slug')
+
 
 admin.site.register(Manga, MangaAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(MangaImage)

@@ -1,7 +1,9 @@
 from io import BytesIO
 from django.db import models
-from django.forms import ValidationError
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from pytils.translit import slugify
 from zipfile import ZipFile
 from django.core.files.base import ContentFile
@@ -47,9 +49,9 @@ class Manga(models.Model):
     tags = models.ManyToManyField("Tag", blank=True, related_name="tagged_manga")
     views = models.IntegerField("Просмотры", default=0, blank=True)
     pages = models.IntegerField("Кол-во страниц", default="0", blank=True)
-    uploader = models.ForeignKey("User", on_delete=models.CASCADE, verbose_name="Кто загрузил")
+    uploader = models.ForeignKey("Profile", on_delete=models.CASCADE, verbose_name="Кто загрузил")
     upload_date = models.DateTimeField("Дата загрузки", auto_now_add=True)
-    likes = models.ManyToManyField("User", related_name="liked_manga", verbose_name="Лайки", blank=True, default=[0])
+    likes = models.ManyToManyField("Profile", related_name="liked_manga", verbose_name="Лайки", blank=True, default=[0])
     nsfw = models.BooleanField("NSFW", default=False, null=False)
 
     def __str__(self):
@@ -62,7 +64,7 @@ class Manga(models.Model):
         if not self.pk:
             try:
                 self.pk = Manga.objects.latest("pk").pk + 1
-            except SyntaxError:
+            except:
                 self.pk = 1
 
         self.slug = f"{self.pk}-{slugify(self.name)}"
@@ -123,20 +125,30 @@ class Tag(models.Model):
         ordering = ['name',]
 
 
-class User(models.Model):
-    name = models.CharField("Имя", max_length=30, db_index=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     slug = models.SlugField("URL", max_length=255, unique=True, db_index=True)
     register_date = models.DateTimeField("Дата регистрации", auto_now_add=True)
     upload_amount = models.IntegerField("Кол-во добавленных манг", default=0)
     comment_amount = models.IntegerField("Кол-во комментариев", default=0)
     about = models.TextField("О себе")
 
+    @receiver(post_save, sender=User)
+    def create_profile(sender, instance, created, **kwargs):
+        if created:
+            slug = slugify(instance.username)
+            Profile.objects.create(user=instance, slug=slug)
+    
+    @receiver(post_save, sender=User)
+    def save_profile(sender, instance, **kwargs):
+        instance.profile.save()
+
     def __str__(self):
-        return self.name
+        return self.user.username
 
     def get_absolute_url(self):
-        return reverse('user', kwargs={'user_slug': self.slug})
+        return reverse('profile', kwargs={'profile_slug': self.slug})
     
     class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        verbose_name = "Профиль"
+        verbose_name_plural = "Профили"

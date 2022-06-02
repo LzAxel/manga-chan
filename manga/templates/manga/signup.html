@@ -1,0 +1,17 @@
+{% extends 'manga/base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block content %}
+<div class="signup">
+    <form action="{% url 'signup' %}" method="post" class="manga-form">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field }}
+            {{ field.errors }}
+        {% endfor %}
+        <button class="button form__button" type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+
+{% endblock %}
