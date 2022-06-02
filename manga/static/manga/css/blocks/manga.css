@@ -109,7 +109,9 @@
     border: none;
     display: block;
 }
-
+.like-button_liked {
+    color: tomato;
+}
 .manga__link {
     cursor: pointer;
     font-style: italic;

@@ -55,6 +55,14 @@ class MangaDetail(DetailView):
         obj.save(update_fields=('views',))
 
         return super().get(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        manga = get_object_or_404(Manga, slug=self.kwargs['manga_slug'])
+        is_liked = manga.likes.filter(pk=self.request.user.profile.pk).exists()
+        context['is_liked'] = is_liked
+
+        return context
 
 class MangaAdd(CreateView):
     form_class = MangaAddForm
@@ -87,7 +95,10 @@ class Login(LoginView):
 @login_required()
 def LikeManga(request):
     manga = get_object_or_404(Manga, pk=request.POST.get('manga_pk'))
-    manga.likes.add(request.user.profile.pk)
+    if manga.likes.filter(pk=request.user.profile.pk).exists():
+        manga.likes.remove(request.user.profile.pk)
+    else:
+        manga.likes.add(request.user.profile.pk)
 
     return redirect(manga.get_absolute_url())
 

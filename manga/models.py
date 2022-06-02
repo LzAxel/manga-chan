@@ -49,7 +49,7 @@ class Manga(models.Model):
     language = models.CharField("Язык", max_length=100, choices = LANGUAGE_CHOICES)
     tags = models.ManyToManyField("Tag", blank=True, related_name="tagged_manga")
     views = models.IntegerField("Просмотры", default=0, blank=True)
-    pages = models.IntegerField("Кол-во страниц", default="0", blank=True)
+    pages = models.IntegerField("Кол-во страниц", default=0, blank=True)
     uploader = models.ForeignKey("Profile", on_delete=models.CASCADE, verbose_name="Кто загрузил")
     upload_date = models.DateTimeField("Дата загрузки", auto_now_add=True)
     likes = models.ManyToManyField("Profile", related_name="liked_manga", verbose_name="Лайки", blank=True, default=[0])

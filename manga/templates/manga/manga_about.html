@@ -26,11 +26,19 @@
                 </div>
                 <form action="{% url 'like_manga' %}" method="post">
                     {% csrf_token %}
-                    <button class="manga-stats__item like-button" 
-                    value="{{ manga.pk }}" name="manga_pk" type="submit">
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                        <span>{{ manga.get_likes_count }}</span>
-                    </button>
+                    {% if is_liked %}
+                        <button class="like-button like-button_liked" 
+                        value="{{ manga.pk }}" name="manga_pk" type="submit">
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            <span>{{ manga.get_likes_count }}</span>
+                        </button>
+                    {% else %}
+                        <button class="like-button" 
+                        value="{{ manga.pk }}" name="manga_pk" type="submit">
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            <span>{{ manga.get_likes_count }}</span>
+                        </button>
+                    {% endif %}
                 </form>
             </div>
             <p class="manga__text">Автор: <a class="manga__link">{{ manga.author }}</a></p>
