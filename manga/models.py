@@ -32,6 +32,7 @@ class MangaImage(models.Model):
 
 class Manga(models.Model):
     LANGUAGE_CHOICES = [
+        (None, "Выберите язык"),
         ("Русский", "Русский"),
         ("Английский", "Английский"),
         ("Японский", "Японский"),

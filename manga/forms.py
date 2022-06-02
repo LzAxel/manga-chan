@@ -7,9 +7,6 @@ from .models import *
 class MangaAddForm(forms.ModelForm):
     required_css_class = "add-manga__required"
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-    
     class Meta:
         model = Manga
         fields = ['name', 'original_name', 'description', 'series',

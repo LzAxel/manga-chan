@@ -1,0 +1,29 @@
+.pagination {
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: var(--item-color);
+}
+.pagination__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 5px;
+    row-gap: 5px;
+    justify-content: center;
+}
+.pagination__item {
+    padding: 3px;
+    padding-top: 4px;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: var(--item-inner-color);
+    text-align: center;
+}
+.pagination__link {
+    display: block;
+}
+.pagination__item_current {
+    background-color: var(--accent-color);
+}

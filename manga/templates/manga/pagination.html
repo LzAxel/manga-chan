@@ -1,0 +1,19 @@
+<div class="pagination">
+    <ul class="pagination__list">
+        {% for page_num in page_obj.paginator.page_range %}
+            {% if page_num == page_obj.number %}
+                <li class="pagination__item  pagination__item_current">
+                    <a href="?page={{ page_num }}" class="pagination__link">
+                        {{ page_num }}
+                    </a>
+                </li>
+                {% else %}
+                <li class="pagination__item">
+                    <a href="?page={{ page_num }}" class="pagination__link">
+                        {{ page_num }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
