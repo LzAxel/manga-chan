@@ -48,6 +48,12 @@ class MangaDetail(DetailView):
     template_name = 'manga/manga_about.html'
     slug_url_kwarg = 'manga_slug'
 
+    def get(self, request, *args, **kwargs):
+        obj = Manga.objects.get(slug=kwargs['manga_slug'])
+        obj.views += 1
+        obj.save(update_fields=('views',))
+
+        return super().get(request, *args, **kwargs)
 
 class MangaAdd(CreateView):
     form_class = MangaAddForm
