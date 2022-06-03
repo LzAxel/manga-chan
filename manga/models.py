@@ -52,7 +52,6 @@ class Manga(models.Model):
     pages = models.IntegerField("Кол-во страниц", default=0, blank=True)
     uploader = models.ForeignKey("Profile", on_delete=models.CASCADE, verbose_name="Кто загрузил")
     upload_date = models.DateTimeField("Дата загрузки", auto_now_add=True)
-    likes = models.ManyToManyField("Profile", related_name="liked_manga", verbose_name="Лайки", blank=True, default=[0])
     nsfw = models.BooleanField("NSFW", default=False, null=False)
 
     def __str__(self):
@@ -156,3 +155,15 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"
+
+
+class Like(models.Model):
+    profile = models.ForeignKey(Profile, models.CASCADE, 'likes', verbose_name='Любимая манга')
+    manga = models.ForeignKey(Manga, models.CASCADE, 'likes', verbose_name='Лайки')
+
+    def __str__(self):
+        return f"{self.profile.user.username} - {self.manga.name}"
+    
+    class Meta:
+        verbose_name = "Лайк"
+        verbose_name_plural = "Лайки"

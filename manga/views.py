@@ -1,3 +1,4 @@
+from urllib import request
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -6,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
+from django.db.models import Exists, OuterRef
 
 from .forms import *
 from .models import Tag, Manga
@@ -25,6 +27,13 @@ class MangaIndex(ListView):
             queryset = queryset.filter(Q(name__icontains=search_query) |
                                     Q(series__icontains=search_query) |
                                     Q(author__icontains=search_query))
+        if self.request.user.is_authenticated:
+            queryset = queryset.annotate(is_liked=Exists(
+                Like.objects.filter(
+                profile=self.request.user.profile.pk,
+                manga=OuterRef('pk'))
+            ))
+            print("\n"*5,queryset)
         return queryset
 
 
@@ -58,9 +67,10 @@ class MangaDetail(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        manga = get_object_or_404(Manga, slug=self.kwargs['manga_slug'])
-        is_liked = manga.likes.filter(pk=self.request.user.profile.pk).exists()
-        context['is_liked'] = is_liked
+        if self.request.user.is_authenticated:
+            manga = get_object_or_404(Manga, slug=self.kwargs['manga_slug'])
+            is_liked = manga.likes.filter(profile=self.request.user.profile).exists()
+            context['is_liked'] = is_liked
 
         return context
 
@@ -95,10 +105,10 @@ class Login(LoginView):
 @login_required()
 def LikeManga(request):
     manga = get_object_or_404(Manga, pk=request.POST.get('manga_pk'))
-    if manga.likes.filter(pk=request.user.profile.pk).exists():
-        manga.likes.remove(request.user.profile.pk)
+    if manga.likes.filter(profile=request.user.profile.pk).exists():
+        Like.objects.filter(profile=request.user.profile, manga=manga).delete()
     else:
-        manga.likes.add(request.user.profile.pk)
+        Like.objects.create(profile=request.user.profile, manga=manga)
 
     return redirect(manga.get_absolute_url())
 
