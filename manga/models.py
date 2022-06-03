@@ -144,7 +144,11 @@ class Profile(models.Model):
     
     @receiver(post_save, sender=User)
     def save_profile(sender, instance, **kwargs):
-        instance.profile.save()
+        try:
+            instance.profile.save()
+        except:
+            slug = slugify(instance.username)
+            Profile.objects.create(user=instance, slug=slug)
 
     def __str__(self):
         return self.user.username
@@ -158,8 +162,8 @@ class Profile(models.Model):
 
 
 class Like(models.Model):
-    profile = models.ForeignKey(Profile, models.CASCADE, 'likes', verbose_name='Любимая манга')
-    manga = models.ForeignKey(Manga, models.CASCADE, 'likes', verbose_name='Лайки')
+    profile = models.ForeignKey(Profile, models.CASCADE, 'liked_manga', verbose_name='Профиль')
+    manga = models.ForeignKey(Manga, models.CASCADE, 'likes', verbose_name='Манга')
 
     def __str__(self):
         return f"{self.profile.user.username} - {self.manga.name}"

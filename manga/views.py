@@ -80,6 +80,11 @@ class MangaAdd(CreateView):
 
     def form_valid(self, form):
         form.instance.uploader = self.request.user.profile
+        obj = Profile.objects.get(user=self.request.user)
+        obj.upload_amount = Manga.objects.filter(
+            uploader=self.request.user.profile).count() + 1
+        obj.save(update_fields=('upload_amount',))
+
         return super().form_valid(form)
 
 
