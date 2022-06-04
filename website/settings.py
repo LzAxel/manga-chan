@@ -15,7 +15,7 @@ import environ
 
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     SECRET_KEY=(str, 'unsafe-secret-key')
 )
 
