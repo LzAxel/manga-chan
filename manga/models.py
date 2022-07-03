@@ -8,10 +8,7 @@ from pytils.translit import slugify
 from zipfile import ZipFile
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-import os
 
-from pathlib import Path
-from django.conf import settings
 # Create your models here.
 
 def manga_zip_location(self, zipname):
@@ -50,7 +47,7 @@ class Manga(models.Model):
     tags = models.ManyToManyField("Tag", blank=True, related_name="tagged_manga")
     views = models.IntegerField("Просмотры", default=0, blank=True)
     pages = models.IntegerField("Кол-во страниц", default=0, blank=True)
-    uploader = models.ForeignKey("Profile", on_delete=models.CASCADE, verbose_name="Кто загрузил")
+    uploader = models.ForeignKey("Profile", on_delete=models.CASCADE, verbose_name="Кто загрузил", related_name="uploaded_manga")
     upload_date = models.DateTimeField("Дата загрузки", auto_now_add=True)
     nsfw = models.BooleanField("NSFW", default=False, null=False)
 
@@ -131,9 +128,8 @@ class Tag(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     slug = models.SlugField("URL", max_length=255, unique=True, db_index=True)
+    image = models.ImageField("Фотография профиля", null=True, blank=True)
     register_date = models.DateTimeField("Дата регистрации", auto_now_add=True)
-    upload_amount = models.IntegerField("Кол-во добавленных манг", default=0)
-    comment_amount = models.IntegerField("Кол-во комментариев", default=0)
     about = models.TextField("О себе")
 
     @receiver(post_save, sender=User)

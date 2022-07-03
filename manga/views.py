@@ -1,18 +1,15 @@
-from urllib import request
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 from django.db.models import Exists, OuterRef
 
 from .forms import *
-from .models import Tag, Manga
+from .models import *
 
-# Create your views here.
 
 class MangaIndex(ListView):
     model = Manga
@@ -22,18 +19,23 @@ class MangaIndex(ListView):
     
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        search_query = self.request.GET.get('search', '')
+        search_query = self.request.GET.get('search', None)
+        uploader = self.request.GET.get('uploader', None)
         if search_query:
             queryset = queryset.filter(Q(name__icontains=search_query) |
                                     Q(series__icontains=search_query) |
                                     Q(author__icontains=search_query))
+        
+        if uploader:
+            queryset = queryset.filter(uploader__user__username__icontains=uploader)
+        
         if self.request.user.is_authenticated:
             queryset = queryset.annotate(is_liked=Exists(
                 Like.objects.filter(
                 profile=self.request.user.profile.pk,
                 manga=OuterRef('pk'))
             ))
-            print("\n"*5,queryset)
+
         return queryset
 
 
@@ -57,19 +59,23 @@ class MangaDetail(DetailView):
     model = Manga
     template_name = 'manga/manga_about.html'
     slug_url_kwarg = 'manga_slug'
+    context_object_name = 'manga'
 
-    def get(self, request, *args, **kwargs):
-        obj = Manga.objects.get(slug=kwargs['manga_slug'])
-        obj.views += 1
-        obj.save(update_fields=('views',))
+    def get_object(self):
+        manga_slug = self.kwargs.get('manga_slug')
+        manga = get_object_or_404(Manga, slug=manga_slug)
+        manga.views = manga.views + 1
+        manga.save(update_fields=('views',))
 
-        return super().get(request, *args, **kwargs)
+        return manga
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            manga = get_object_or_404(Manga, slug=self.kwargs['manga_slug'])
-            is_liked = manga.likes.filter(profile=self.request.user.profile).exists()
+        manga = context['manga']
+        context['preview'] = manga.images.first().image.url
+        user = self.request.user
+        if user.is_authenticated:
+            is_liked = manga.likes.filter(profile=user.profile).exists()
             context['is_liked'] = is_liked
 
         return context
@@ -92,6 +98,16 @@ class ProfileDetail(DetailView):
     model = Profile
     template_name = 'manga/profile.html'
     slug_url_kwarg = 'profile_slug'
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['uploaded_manga'] = context['profile'].uploaded_manga.count()
+        context['liked_manga'] = Manga.objects.filter(likes__profile=context['profile'])
+        print(context['liked_manga'])
+
+        return context
 
 
 class SignUp(CreateView):
