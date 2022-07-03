@@ -17,7 +17,7 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'slug', 'register_date', 'upload_amount', 'comment_amount')
+    list_display = ('id', 'slug', 'register_date')
     list_display_links = ('id', 'slug')
 
 
