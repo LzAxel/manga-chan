@@ -6,9 +6,7 @@
                 value="{{ request.GET.search }}">
         </form>
         <ul class="menu__list">
-            <li class="menu__item">
-                <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
-            </li>
+            
             
             {% if not request.user.is_authenticated %}
                 <li class="menu__item">
@@ -18,6 +16,9 @@
                     <a href="{% url 'signup' %}" class="menu__link menu__link_outline">Регистрация</a>
                 </li>
             {% else %}
+                <li class="menu__item">
+                    <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
+                </li>
                 <li class="menu__item menu__user">
                     <a href="{{ request.user.profile.get_absolute_url }}" class="menu__link">Профиль</a>
                 </li>

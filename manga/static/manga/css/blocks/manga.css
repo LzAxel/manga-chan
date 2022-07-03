@@ -5,7 +5,7 @@
     
 }
 
-.manga__item {
+.block__item {
     background-color: var(--item-color);
     padding: 7px 5px;
     border-radius: 5px;
@@ -14,7 +14,7 @@
 }
 
 @media(max-width: 424px) {
-    .manga__item {
+    .block__item {
         flex-direction: column;
     }
 }

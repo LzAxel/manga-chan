@@ -1,0 +1,24 @@
+.liked-manga__list {
+    display: flex;
+    flex-direction: row;
+    column-gap: 7px;
+    overflow: hidden;
+}
+.liked-manga__item {
+    background-color: var(--item-inner-color);
+    padding: 3px;
+    border-radius: 3px;
+    width: min-content;
+}
+.liked-manga__image {
+    height: 150px;
+    border-radius: 4px;
+    padding-bottom: 3px;
+}
+.liked-manga__name {
+
+}
+.liked-manga__see-more {
+    flex-grow: 0;
+    width: auto;
+}

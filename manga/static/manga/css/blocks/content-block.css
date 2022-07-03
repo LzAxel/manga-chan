@@ -1,0 +1,14 @@
+.content-block {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--item-color);
+}
+.content-block__header {
+    font-size: 18px;
+    color: var(--accent-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}

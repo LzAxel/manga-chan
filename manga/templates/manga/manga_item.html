@@ -1,7 +1,7 @@
 {% load static %}
 {% load manga_tags %}
 
-<div class="manga__item">
+<div class="block__item">
     {% if manga.images %}
     <div class="manga__preview">
         {% for image in manga.images.all|slice:":2" %}

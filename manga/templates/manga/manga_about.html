@@ -3,10 +3,10 @@
 {% load manga_tags %}
 
 {% block content %}
-<div class="manga__item manga-about__item">
+<div class="block__item manga-about__item">
     <div class="manga__preview manga-about__preview">
-        <img class="manga__image manga-about__image" src="{{ manga.images.first.image.url }}" alt="">
-        <img class="manga-about__image-background" src="{{ manga.images.first.image.url }}" alt="">
+        <img class="manga__image manga-about__image" src="{{ preview }}" alt="">
+        <img class="manga-about__image-background" src="{{ preview }}" alt="">
     </div>
     <div class="manga__info manga-about__info">
         <div class="manga__name manga-about__name">

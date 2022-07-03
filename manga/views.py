@@ -103,7 +103,7 @@ class ProfileDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['uploaded_manga'] = context['profile'].uploaded_manga.count()
+        context['uploaded_manga_amount'] = context['profile'].uploaded_manga.count()
         context['liked_manga'] = Manga.objects.filter(likes__profile=context['profile'])
         print(context['liked_manga'])
 
