@@ -19,15 +19,16 @@ class MangaIndex(ListView):
     
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        search_query = self.request.GET.get('search', None)
-        uploader = self.request.GET.get('uploader', None)
-        if search_query:
-            queryset = queryset.filter(Q(name__icontains=search_query) |
-                                    Q(series__icontains=search_query) |
-                                    Q(author__icontains=search_query))
+        _search_query = self.request.GET.get('search', None)
+        _uploader = self.request.GET.get('uploader', None)
+
+        if _search_query:
+            queryset = queryset.filter(Q(name__icontains=_search_query) |
+                                    Q(series__icontains=_search_query) |
+                                    Q(author__icontains=_search_query))
         
-        if uploader:
-            queryset = queryset.filter(uploader__user__username__icontains=uploader)
+        if _uploader:
+            queryset = queryset.filter(uploader__user__username__icontains=_uploader)
         
         if self.request.user.is_authenticated:
             queryset = queryset.annotate(is_liked=Exists(
@@ -37,6 +38,15 @@ class MangaIndex(ListView):
             ))
 
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        _uploader = self.request.GET.get('uploader', None)
+
+        if _uploader:
+            context['title'] = f'Манга залитая пользователем {_uploader}'
+
+        return context
 
 
 class MangaRead(ListView):
@@ -86,10 +96,6 @@ class MangaAdd(CreateView):
 
     def form_valid(self, form):
         form.instance.uploader = self.request.user.profile
-        obj = Profile.objects.get(user=self.request.user)
-        obj.upload_amount = Manga.objects.filter(
-            uploader=self.request.user.profile).count() + 1
-        obj.save(update_fields=('upload_amount',))
 
         return super().form_valid(form)
 
