@@ -3,25 +3,27 @@
 {% load form_tags %}
 
 {% block content %}
-<div class="add-manga">
-    <form action="{% url 'add_manga' %}" method="post" class="manga-form"
-        enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in form %}
-            {% if field|is_checkbox %}
-                <label class="form__label">
+    <div class="content-block__title">
+        <h1>Добавление манги</h1>
+    </div>
+    <div class="add-manga">
+        <form action="{% url 'add_manga' %}" method="post" class="manga-form"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field|is_checkbox %}
+                    <label class="form__label">
+                        {{ field }}
+                        <span class="check__box">
+                            <i class="fa fa-check check__mark"></i>
+                        </span>
+                        {{ field.label }}
+                    </label>
+                {% else %}
                     {{ field }}
-                    <span class="check__box">
-                        <i class="fa fa-check check__mark"></i>
-                    </span>
-                    {{ field.label }}
-                </label>
-            {% else %}
-                {{ field }}
-            {% endif %}
-        {% endfor %}
-        <button class="button form__button" type="submit">Добавить</button>
-    </form>
-</div>
-
+                {% endif %}
+            {% endfor %}
+            <button class="button form__button" type="submit">Добавить</button>
+        </form>
+    </div>
 {% endblock %}
