@@ -47,10 +47,12 @@
             </div>
             <div class="liked-manga__list">
                 {% for manga in liked_manga|slice:":8" %}
+                <a href="{{ manga.get_absolute_url }}" class="liked-manga__link">
                     <div class="liked-manga__item">
                         <img src="{{ manga.images.first.image.url }}" class="manga__image liked-manga__image" alt="">
                         <h2 class="liked-manga__name">{{ manga.name }}</h2>
                     </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
