@@ -83,6 +83,7 @@ class MangaDetail(DetailView):
         context = super().get_context_data(**kwargs)
         manga = context['manga']
         context['preview'] = manga.images.first().image.url
+        context['comments'] = manga.get_comments()
         user = self.request.user
         if user.is_authenticated:
             is_liked = manga.likes.filter(profile=user.profile).exists()
@@ -110,8 +111,9 @@ class ProfileDetail(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['uploaded_manga_amount'] = context['profile'].uploaded_manga.count()
+        context['comment_amount'] = context['profile'].comments.count()
         context['liked_manga'] = Manga.objects.filter(likes__profile=context['profile'])
-        print(context['liked_manga'])
+        context['comments'] = context['profile'].get_latest_comments()
 
         return context
 
