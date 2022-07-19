@@ -29,6 +29,12 @@ class Comment(models.Model):
    
     def get_manga(self):
         return self.manga
+    
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+        ordering = ["-date"]
 
 class MangaImage(models.Model):
     manga = models.ForeignKey("Manga", models.CASCADE, "images", verbose_name="Манга")
