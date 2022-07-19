@@ -67,6 +67,22 @@
         <a href="{{ manga.zip.url }}" class="manga-about__button">Скачать мангу</a>
         <a href="" class="manga-about__button">Похожая манга</a>
     </div>
-   
+   <div class="manga-about__comment">
+        <h1 class="content-block__title comment__title">Комментарии</h1>
+        <div class="comment__list">
+            {% for comment in comments %}
+                <div class="comment__item">
+                    <img src="{{ comment.author.get_avatar }}" class="comment__avatar"></img>
+                    <div class="comment__info clearfix">
+                        <a href="{{ comment.author.get_absolute_url }}" class="comment__username">{{ comment.author.user.username }}</a>
+                        <p class="comment__date"> {{ comment.date }}</p>
+                    </div>
+                    <div class="comment__text"><p>{{ comment.text }}</p></div>
+                </div>
+                <div class="comment__line"></div>
+                
+            {% endfor %}
+        </div>
+   </div>
 </div>
 {% endblock %}

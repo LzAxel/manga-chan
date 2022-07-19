@@ -4,7 +4,8 @@
     row-gap: 7px;
     grid-template-areas: 
     'preview info'
-    'actions info';
+    'actions info'
+    'comm comm';
 }
 @media(max-width: 599px) {
     .manga-about__item {
@@ -12,7 +13,8 @@
         grid-template-areas: 
         'preview'
         'actions'
-        'info';
+        'info'
+        'comm';
         row-gap: 15px;
     }
 }
@@ -116,4 +118,7 @@
 .manga-about__info {
     grid-area: info;
     height: auto;
+}
+.manga-about__comment {
+    grid-area: comm;
 }

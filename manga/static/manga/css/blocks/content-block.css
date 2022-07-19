@@ -3,6 +3,11 @@
     border-radius: 5px;
     background-color: var(--item-color);
 }
+.content-block__inner {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--item-inner-color);
+}
 .content-block__header {
     font-size: 18px;
     color: var(--accent-color);
