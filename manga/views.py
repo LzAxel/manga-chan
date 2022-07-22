@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -65,11 +66,33 @@ class MangaRead(ListView):
         return images
 
 
-class MangaDetail(DetailView):
+class MangaDetail(FormMixin, DetailView):
     model = Manga
     template_name = 'manga/manga_about.html'
     slug_url_kwarg = 'manga_slug'
     context_object_name = 'manga'
+    form_class = CommentForm
+
+    def get_success_url(self, *args, **kwargs):
+        manga_slug = self.kwargs['manga_slug']
+
+        return reverse_lazy('manga_about', kwargs={'manga_slug': manga_slug})
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.object = self.get_object()
+            form = self.get_form()
+            if form.is_valid():
+                return self.form_valid(form)
+
+    
+    def form_valid(self, form):
+        form.instance.manga = self.get_object()
+        form.instance.author = self.request.user.profile
+        
+        form.save()
+
+        return super().form_valid(form)
 
     def get_object(self):
         manga_slug = self.kwargs.get('manga_slug')
