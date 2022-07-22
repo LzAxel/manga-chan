@@ -14,8 +14,8 @@
                 {% if field|is_checkbox %}
                     <label class="form__label">
                         {{ field }}
-                        <span class="check__box">
-                            <i class="fa fa-check check__mark"></i>
+                        <span class="check-box__box">
+                            <i class="fa fa-check check-box__mark"></i>
                         </span>
                         {{ field.label }}
                     </label>
@@ -23,7 +23,7 @@
                     {{ field }}
                 {% endif %}
             {% endfor %}
-            <button class="button form__button" type="submit">Добавить</button>
+            <button class="button button--accent" type="submit">Добавить</button>
         </form>
     </div>
 {% endblock %}

@@ -6,61 +6,10 @@
     border-radius: 5px;
     padding: 5px;
 }
-.form__input {
-    border-radius: 3px;
-    border: none;
-    padding: 5px 7px;
-    min-height: 30px;
-    font-size: 14px;
-    background-color: var(--item-inner-color);
-}
-.form__file {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-}
-.form__file::-webkit-file-upload-button{
-    border: none;
-    background-color: var(--item-inner-color);
-    border-radius: 3px;
-    padding: 5px 7px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-}
-.form__button{
-    margin-top: 10px;
-    background-color: var(--accent-color);
-    border: none;
-    border-radius: 3px;
-    padding: 5px 0;
-    color: #FFF;
-}
+
 .form__label {
     display: flex;
     column-gap: 5px;
     align-items: center;
     position: relative;
-}
-
-.check__input {
-    height: 20px;
-    width: 20px;
-    appearance: none;
-    top: 0;
-    position: absolute;
-}
-.check__box {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    background-color: var(--item-color);
-    border: 2px solid var(--item-inner-color);
-}
-.check__mark {
-    display: none;
-}
-.check__input:checked + .check__box {
-    background-color: var(--item-inner-color);
-}
-.check__input:checked + .check__box .check__mark {
-    display: block;
 }

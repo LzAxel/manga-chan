@@ -12,11 +12,9 @@
     'avatar info info'
     'avatar text text';
     grid-template-columns: min-content auto auto;
-    padding: 4px;
+    grid-template-rows: min-content 1fr;
     column-gap: 6px;
     row-gap: 4px;
-    border-radius: 5px;
-    background-color: var(--item-inner-color);
 }
 @media(max-width: 374px) {
     .comment__item {
@@ -78,4 +76,26 @@
     .comment__avatar {
         display: none;
     }
+}
+
+.textarea-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+}
+.textarea-form__textarea {
+    background-color: var(--item-inner-color);
+    border-radius: 5px;
+    border: none;
+    padding: 4px;
+    font-size: 16px;
+    resize: none;
+    flex-grow: 0;
+}
+.comment__button {
+    flex-grow: 0;
+    max-width: 120px;
+}
+.comment__form {
+    margin-bottom: 10px;
 }

@@ -38,7 +38,7 @@
         <div class="content-block">
             <div class="content-block__header">
                 <h1 class="liked-manga__header">Понравившаяся манга</h1>
-                <a href="#" class="manga-about__button liked-manga__see-more">Все</a>
+                <a href="#" class="button button--outline button--small">Все</a>
             </div>
             <div class="liked-manga__list">
                 {% for manga in liked_manga|slice:":8" %}
@@ -54,15 +54,15 @@
         <div class="content-block">
             <div class="content-block__header">
                 <h1 class="liked-manga__header">Последние комментарии</h1>
-                <a href="#" class="manga-about__button liked-manga__see-more">Все</a>
+                <a href="#" class="button button--outline button--small">Все</a>
             </div>
             <div class="manga-about__comment">
                 <div class="comment__list">
                     {% for comment in comments %}
-                        <div class="comment__item">
+                        <div class="content-block__inner comment__item">
                             <img src="{{ comment.manga.get_preview }}" class="comment__avatar"></img>
                             <div class="comment__info clearfix">
-                                <a href="{{ comment.manga.get_aboslute_url }}" class="comment__username">
+                                <a href="{{ comment.manga.get_absolute_url }}" class="comment__username">
                                     {{ comment.manga.name }}
                                 </a>
                                 <p class="comment__date"> {{ comment.date }}</p>

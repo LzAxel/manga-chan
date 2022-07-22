@@ -85,25 +85,7 @@
         column-gap: 5px;
     }
 }
-.manga-about__button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    padding: 5px;
-    background-color: var(--item-inner-color);
-    border-radius: 5px;
-    flex-grow: 1;
-}
-.manga-about__button:hover {
-    color: var(--text-color-alt);
-    background-color: var(--accent-color);
-}
-.manga-about__button--outline {
-    border: 2px solid var(--accent-color);
-    background-color: var(--item-color);
-}
+
 .manga-about__uploader {
     border-radius: 5px;
     padding: 5px 4px;
@@ -121,4 +103,7 @@
 }
 .manga-about__comment {
     grid-area: comm;
+}
+.manga-about__button {
+    flex-grow: 1 !important;
 }

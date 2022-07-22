@@ -2,29 +2,41 @@
     <nav class="header__menu menu">
         <a class="menu__logo" href="{% url 'index' %}">MangaChan</a>
         <form action="/" method="get" class="search-form">
-            <input class="search-form__input input" name="search" type="text" placeholder="Поиск манги"
+            <input class="input input--accent" name="search" type="text" placeholder="Поиск манги, автора, серии"
                 value="{{ request.GET.search }}">
         </form>
         <ul class="menu__list">
-            
-            
-            {% if not request.user.is_authenticated %}
-                <li class="menu__item">
-                    <a href="{% url 'login' %}" class="menu__link">Войти</a>
-                </li>
-                <li class="menu__item">
-                    <a href="{% url 'signup' %}" class="menu__link menu__link_outline">Регистрация</a>
-                </li>
+            {% if not user.is_authenticated %}
+                <div class="menu__top">
+                    <li class="menu__item menu__item--burger">
+                        <a href="{% url 'index' %}" class="menu__link button button--inner">Главная</a>
+                    </li>
+                </div>
+                <div class="menu__bottom">
+                    <li class="menu__item">
+                        <a href="{% url 'login' %}" class="menu__link button button--inner">Войти</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="{% url 'signup' %}" class="menu__link button button--outline">Регистрация</a>
+                    </li>
+                </div>
             {% else %}
-                <li class="menu__item">
-                    <a href="{% url 'add_manga' %}" class="menu__link">Добавить мангу</a>
-                </li>
-                <li class="menu__item menu__user">
-                    <a href="{{ request.user.profile.get_absolute_url }}" class="menu__link">Профиль</a>
-                </li>
-                <li class="menu__item menu__user">
-                    <a href="{% url 'logout' %}" class="menu__link menu__link_outline">Выйти</a>
-                </li>
+                <div class="menu__top">
+                    <li class="menu__item menu__item--burger">
+                        <a href="{% url 'index' %}" class="menu__link button button--inner">Главная</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="{% url 'add_manga' %}" class="menu__link button button--inner">Добавить мангу</a>
+                    </li>
+                </div>
+                <div class="menu__bottom">
+                    <li class="menu__item menu__user">
+                        <a href="{{ request.user.profile.get_absolute_url }}" class="menu__link button button--inner">Профиль</a>
+                    </li>
+                    <li class="menu__item menu__user">
+                        <a href="{% url 'logout' %}" class="menu__logout menu__link button button--outline">Выйти</a>
+                    </li>
+                </div>
             {% endif %}
         </ul>
         <div class="menu__burger">

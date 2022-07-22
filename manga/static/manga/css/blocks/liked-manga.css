@@ -9,6 +9,7 @@
     padding: 3px;
     border-radius: 3px;
     width: min-content;
+    transition: 0.2s;
 }
 .liked-manga__image {
     height: 150px;

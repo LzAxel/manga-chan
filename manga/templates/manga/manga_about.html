@@ -63,26 +63,39 @@
         </div>
     </div>
     <div class="manga-about__actions">
-        <a href="{% url 'read' manga.slug %}?page=1" class="manga-about__button manga-about__button--outline">Читать мангу</a>
-        <a href="{{ manga.zip.url }}" class="manga-about__button">Скачать мангу</a>
-        <a href="" class="manga-about__button">Похожая манга</a>
+        <a href="{% url 'read' manga.slug %}?page=1" class="manga-about__button button button--outline">Читать мангу</a>
+        <a href="{{ manga.zip.url }}" class="manga-about__button button button--inner">Скачать мангу</a>
+        <a href="" class="manga-about__button button button--inner">Похожая манга</a>
     </div>
-   <div class="manga-about__comment">
-        <h1 class="content-block__title comment__title">Комментарии</h1>
-        <div class="comment__list">
-            {% for comment in comments %}
-                <div class="comment__item">
-                    <img src="{{ comment.author.get_avatar }}" class="comment__avatar"></img>
-                    <div class="comment__info clearfix">
-                        <a href="{{ comment.author.get_absolute_url }}" class="comment__username">{{ comment.author.user.username }}</a>
-                        <p class="comment__date"> {{ comment.date }}</p>
-                    </div>
-                    <div class="comment__text"><p>{{ comment.text }}</p></div>
-                </div>
-                <div class="comment__line"></div>
-                
+    <div class="manga-about__comment">
+        <h1 class="content-block__header">Комментарии</h1>
+        {% if user.is_authenticated %}
+        <form method="post" class="comment__form textarea-form">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field }}
             {% endfor %}
+            <button type="submit" class="comment__button button button--outline">Отправить</button>
+        </form>
+        {% endif %}
+        <div class="comment__list">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="content-block__inner comment__item">
+                        <img src="{{ comment.author.get_avatar }}" class="comment__avatar"></img>
+                        <div class="comment__info clearfix">
+                            <a href="{{ comment.author.get_absolute_url }}" class="comment__username">{{ comment.author.user.username }}</a>
+                            <p class="comment__date"> {{ comment.date }}</p>
+                        </div>
+                        <div class="comment__text"><p>{{ comment.text }}</p></div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="content-block__inner">
+                    <h2>Комментариев нет</h2>
+                </div>
+            {% endif %}
         </div>
-   </div>
+    </div>
 </div>
 {% endblock %}
