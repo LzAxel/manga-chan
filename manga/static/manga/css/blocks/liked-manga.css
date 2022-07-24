@@ -10,6 +10,7 @@
     border-radius: 3px;
     width: min-content;
     transition: 0.2s;
+    height: 100%;
 }
 .liked-manga__image {
     height: 150px;
