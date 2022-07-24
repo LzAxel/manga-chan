@@ -5,6 +5,12 @@
     margin: 0;
     bottom: 0;
     box-sizing: border-box;
+    outline: none;
+}
+
+*:focus {
+    box-shadow: 0 0 0 2px var(--focus-color);
+    transition: 0.2s;
 }
 
 a {
