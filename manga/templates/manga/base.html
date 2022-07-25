@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="{% static 'manga/css/index.css' %}">
-
+    <script type="text/javascript" src="{% static 'manga/js/script.js' %}"></script>
     <script>
         if (window.matchMedia('(prefers-color-scheme: dark)').media === 'not all') {
           document.documentElement.style.display = 'none';
@@ -35,18 +35,13 @@
     <main class="main">
         <div class="main__container container">
             <section class="main__content">
-                {% block content %}
-
-                {% endblock %}
+                {% block content %}{% endblock %}
             </section>
-            <section class="main__sidebar sidebar">
-                
-            </section>
+            <section class="content-block main__sidebar sidebar">{% block sidebar %}{% endblock %}</section>
         </div>
     </main>
     <footer class="footer">
         <div class="footer__container container">
-
         </div>
     </footer>
     <script>
