@@ -1,0 +1,14 @@
+{% extends 'manga/base.html' %}
+{% load static %}
+{% load manga_tags %}
+
+{% block content %}
+    <div class="catalog__list">
+        {% for manga in mangas %}
+            {% include 'manga/catalog_item.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block sidebar %}
+    {% include 'manga/manga_filter.html' %}
+{% endblock %}

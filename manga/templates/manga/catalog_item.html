@@ -1,0 +1,16 @@
+{% load static %}
+{% load manga_tags %}
+
+<div class="catalog-manga__item">
+    {% if manga.images %}
+        <a href="{{ manga.get_absolute_url }}" class="catalog-manga__image content-block " style="background-image: url('{{ manga.images.first.image.url }}');">
+            <div class="catalog-manga__info">
+                <h2>
+                    {{ manga.name }}
+                </h2>
+            </div>
+        </a>
+    {% endif %}
+    
+
+</div>

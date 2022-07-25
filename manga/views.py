@@ -6,7 +6,8 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Count
+
 
 from .forms import *
 from .models import *
@@ -168,3 +169,46 @@ def LikeManga(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+
+class Catalog(ListView):
+    model = Manga
+    template_name = 'manga/catalog.html'
+    context_object_name = 'mangas'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        if self.request.method == 'GET':
+            post = self.request.GET
+            print("-"*30)
+            tags_include = post.getlist('tags_include')
+            tags_exclude = post.getlist('tags_exclude')
+            status = post.getlist('status')
+            print(f"{tags_include=} {tags_exclude=} {status=}")
+            if not tags_include:
+                queryset = queryset.exclude(tags__slug__in=tags_exclude)
+            else:
+                queryset = queryset.filter(tags__slug__in=tags_include) \
+                    .annotate(num_tags=Count('tags')) \
+                    .filter(num_tags=len(tags_include)) \
+                    .exclude(tags__slug__in=tags_exclude)
+            if status:
+                for stat in status:
+                    queryset = queryset.filter(**{stat: True})
+
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        if self.request.method == "POST":
+            filters = self.request.POST
+        context['tags'] = Tag.objects.all()
+        print(self.request.POST.getlist('test1'))
+
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()  
+        context = self.get_context_data(*args, **kwargs)
+        return self.render_to_response(context)

@@ -13,13 +13,8 @@
 .main__content {
     width: 100%;
 }
-.main__side {
-    background-color: var(--item-color);
-    border-radius: 5px;
-    padding: 7px 5px;
-}
 @media (max-width: 629px) {
-    .main__side {
+    .main__sidebar {
         display: none;
     }
 }

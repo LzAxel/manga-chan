@@ -1,0 +1,38 @@
+.catalog__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    row-gap: 5px;
+    
+}
+.catalog-manga__item {
+    padding: 5px;
+    width: 25%;
+}
+@media(max-width: 767px) {
+    .catalog-manga__item {
+        width: 33%;
+    }
+}
+@media(max-width: 550px) {
+    .catalog-manga__item {
+        width: 50%;
+    }
+}
+.catalog-manga__image {
+    padding-top: 140%;
+    display: block;
+    object-fit: cover;
+    position: relative;
+    background-size: cover;
+    background-position: 50%;
+}
+.catalog-manga__info{
+    background-image: -webkit-gradient(linear,left bottom,left top,from(rgba(0,0,0,.8)),to(rgba(0,0,0,.01)));
+    position: absolute;
+    padding: 5px 4px;
+    font-size: 14px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

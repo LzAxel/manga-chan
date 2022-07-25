@@ -1,0 +1,34 @@
+<div class="filter__block">
+    <form method="get" action="{% url 'catalog' %}" class="filter__form">
+        <div class="tag__block">
+            <div class="tag__list">
+                <h1 class="content-block__header">Теги</h1>
+                    {% for tag in tags %}
+                        <div class="tag__item">
+                            <label class="form__label">
+                                <input type="checkbox" class="check-box check-box--exclude" id="{{ tag.slug }}" value="{{ tag.slug }}" name=""></input>
+                                <span class="check-box__box">
+                                    <i class="fa fa-check check-box__mark"></i>
+                                    <i class="fa fa-times check-box__mark--exclude" aria-hidden="true"></i>
+                                </span>
+                                <p>{{ tag.name }}</p>
+                            </label>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+        <div class="filter__switchers">
+            <h1 class="content-block__header">Статусы</h1>
+            <div class="filter__switcher">
+                <label class="form__label">
+                    <input type="checkbox" class="check-box" name="status" id="nsfw" value="nsfw"></input>
+                    <span class="check-box__box">
+                        <i class="fa fa-check check-box__mark"></i>
+                    </span>
+                    <p>NSFW</p>
+                </label>
+            </div>
+            <button type="submit" onClick="this.form.reset()" class="tag__button button button--inner">Сбросить</button>
+        <button type="submit" class="tag__button button button--outline">Применить</button>
+    </form> 
+</div>
