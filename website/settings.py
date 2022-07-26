@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db(
+        var='DATABASE_URL',
+        default = f'sqlite:////{BASE_DIR}/db.sqlite3',
+        ),
 }
 
 
@@ -148,3 +148,4 @@ INTERNAL_IPS = [
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda a: False,
 }
+AUTH_PASSWORD_VALIDATORS = []
