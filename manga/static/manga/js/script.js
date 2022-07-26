@@ -52,5 +52,19 @@ ready(function(){
         var cb = document.getElementById(tag);
         cb.checked = true;
     })
+
+    let prevLink = document.getElementById("prevLink");
+    let nextLink = document.getElementById("nextLink");
+    document.addEventListener("keydown", ({key}) => {
+    switch (key) {
+        case 'ArrowLeft':
+        prevLink.click();
+        break;
+        case 'ArrowRight':
+        nextLink.click();
+        break;
+    }
+    });
+
 }); 
 

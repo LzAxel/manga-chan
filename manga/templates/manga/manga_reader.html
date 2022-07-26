@@ -20,15 +20,14 @@
         <div class="page-menu__container">
             <nav class="page-menu__nav">
                 <ul class="page-menu__list">
-                    
                         <li class="page-menu__item">
                             {% if page_obj.has_previous %}
-                            <a href="?page=1" class="page-menu__link">
-                                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                            </a>
-                            <a href="?page={{ page_obj.previous_page_number }}" class="page-menu__link">
-                                <i class="fa fa-angle-left" aria-hidden="true"></i>
-                            </a>
+                                <a href="?page=1" class="page-menu__link">
+                                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                                </a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="page-menu__link">
+                                    <i class="fa fa-angle-left" aria-hidden="true" id="prevLink"></i>
+                                </a>
                             {% endif %}
                         </li>
                     
@@ -38,12 +37,12 @@
                     
                         <li class="page-menu__item">
                             {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="page-menu__link">
-                                <i class="fa fa-angle-right" aria-hidden="true"></i>
-                            </a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-menu__link">
-                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                            </a>
+                                <a href="?page={{ page_obj.next_page_number }}" class="page-menu__link">
+                                    <i class="fa fa-angle-right" aria-hidden="true" id="nextLink"></i>
+                                </a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-menu__link">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                </a>
                             {% endif %}
                         </li>
                 </ul>
