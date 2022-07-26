@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from pytils.translit import slugify
 from zipfile import ZipFile
-from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
 # Create your models here.
@@ -104,21 +103,27 @@ class Manga(models.Model):
                 super(Manga, self).save(*args, **kwargs)
                 for num, name in enumerate(files):
                     data = zip_file.read(name)
+                    output = BytesIO()
                     try:
                         from PIL import Image
                         image = Image.open(BytesIO(data))
                         image.load()
-                        image = Image.open(BytesIO(data))
-                        image.verify()
+                        if image.mode in ('RGBA', 'LA'):
+                            background = Image.new(image.mode[:-1], image.size, '#fff')
+                            background.paste(image, image.split()[-1])
+                            image = background
+                        image.save(output, 'jpeg', quality=30,optimize=True)
+                        
                     except ImportError:
                         pass
-                    except:
+                    except Exception as ex:
                         continue
+                        
                     name = f"{num}.{name.split('.')[-1]}"
                     print(name)
 
                     path = manga_zip_location(self, name)
-                    saved_path = default_storage.save(path, ContentFile(data))
+                    saved_path = default_storage.save(path, output)
                     self.images.create(image=saved_path)
     
     def get_comments(self):
