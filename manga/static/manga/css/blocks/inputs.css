@@ -69,12 +69,14 @@
 }
 .check-box--exclude[name="tags_include"] + .check-box__box {
     background-color: var(--accent-color);
+    border: 2px solid var(--accent-color);
 }
 .check-box--exclude[name="tags_include"] + .check-box__box .check-box__mark {
     display: block;
 }
 .check-box--exclude[name="tags_exclude"] + .check-box__box {
     background-color: tomato;
+    border: 2px solid tomato;
 }
 .check-box--exclude[name="tags_exclude"] + .check-box__box .check-box__mark--exclude {
     display: block;
