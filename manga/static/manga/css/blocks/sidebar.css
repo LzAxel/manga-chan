@@ -1,3 +1,6 @@
 .sidebar {
 
 }
+.sidebar:empty {
+    display: none;
+}
