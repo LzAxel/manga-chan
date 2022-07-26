@@ -8,6 +8,7 @@
 .catalog-manga__item {
     padding: 5px;
     width: 25%;
+    position: relative;
 }
 @media(max-width: 767px) {
     .catalog-manga__item {
@@ -29,10 +30,24 @@
 }
 .catalog-manga__info{
     background-image: -webkit-gradient(linear,left bottom,left top,from(rgba(0,0,0,.8)),to(rgba(0,0,0,.01)));
+    border-radius: 5px;
     position: absolute;
-    padding: 5px 4px;
+    padding: 10px 8px;
     font-size: 14px;
     bottom: 0;
     left: 0;
     width: 100%;
+}
+.catalog-manga__name {
+    padding-top: 3px;
+}
+.catalog-manga__nsfw {
+    height:100%;
+    width:100%;
+    text-align:center;
+    filter: blur(3px);
+    left:0;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }

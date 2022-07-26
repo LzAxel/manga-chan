@@ -3,14 +3,18 @@
 
 <div class="catalog-manga__item">
     {% if manga.images %}
-        <a href="{{ manga.get_absolute_url }}" class="catalog-manga__image content-block " style="background-image: url('{{ manga.images.first.image.url }}');">
-            <div class="catalog-manga__info">
-                <h2>
-                    {{ manga.name }}
-                </h2>
-            </div>
-        </a>
+        {% if manga.nsfw %}
+            <a href="{{ manga.get_absolute_url }}" class="catalog-manga__nsfw catalog-manga__image content-block" style="background-image: url('{{ manga.images.first.image.url }}');"></a>
+        {% else %}
+            <a href="{{ manga.get_absolute_url }}" class="catalog-manga__image content-block" style="background-image: url('{{ manga.images.first.image.url }}');"></a>
+        {% endif %}
+        <div class="catalog-manga__info">
+            {% if manga.nsfw %}
+                <span class="nsfw__label">NSFW</span>
+            {% endif %}
+            <h2 class="catalog-manga__name">
+                {{ manga.name }}
+            </h2>
+        </div>
     {% endif %}
-    
-
 </div>

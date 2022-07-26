@@ -15,8 +15,11 @@
                     <h1>{{ manga.name }} <span>({{ manga.original_name }})</span></h1>
                 {% else %}
                     <h1>{{ manga.name }}</h1>
-                {% endif %}
+                {% endif %}    
             </a>
+            {% if manga.nsfw %}
+                <span class="nsfw__label">NSFW</span>
+            {% endif %}
         </div>
         <div class="manga__about">
             <div class="manga__stats manga-stats">
