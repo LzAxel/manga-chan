@@ -3,11 +3,14 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete, pre_delete
 from pytils.translit import slugify
 from zipfile import ZipFile
 from django.core.files.storage import default_storage
-
+from pathlib import Path
+import shutil
+import os
+import stat
 # Create your models here.
 
 def manga_zip_location(self, zipname):
@@ -205,3 +208,28 @@ class Like(models.Model):
     class Meta:
         verbose_name = "Лайк"
         verbose_name_plural = "Лайки"
+
+
+def _delete_file(path):
+    path = Path(path)
+    if path.is_file():
+        path.unlink()
+
+def _delete_dir(path):
+    path = Path(path)
+    def on_err_delete(operation, name, exc):
+        os.chmod(name, stat.S_IWRITE)
+        os.rmdir(name)
+
+    if path.is_dir():
+        shutil.rmtree(path, onerror=on_err_delete)
+
+    
+
+@receiver(pre_delete, sender=Manga)
+def delete_img_pre_delete_manga(sender, instance, *args, **kwargs):
+    if instance.zip:
+        manga_dir = Path(instance.zip.path).parent
+        _delete_dir(manga_dir)
+    
+    
