@@ -66,5 +66,11 @@ ready(function(){
     }
     });
 
+    document.querySelector('.filter__button').addEventListener('click', () => {
+        document.querySelector('.filter__form').classList.toggle('active');
+        document.querySelector('.filter__menu').classList.toggle('active');
+        document.querySelector('body').classList.toggle('lock');
+    });
+
 }); 
 

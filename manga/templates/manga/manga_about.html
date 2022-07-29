@@ -51,7 +51,7 @@
                 {% get_tags manga as manga_tags %}
                 {% for tag in manga_tags|slice:":10" %}
                 <li class="manga__tag-item">
-                    <a class="manga__link" href="#">{{tag.name}}</a>
+                    <a class="manga__link" href="{% url 'catalog' %}?tags_include={{ tag.slug }}">{{tag.name}}</a>
                 </li>
                 {% endfor %}
             </ul>

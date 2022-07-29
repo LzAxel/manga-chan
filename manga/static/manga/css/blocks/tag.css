@@ -9,6 +9,15 @@
     flex-direction: column;
     row-gap: 5px;
 }
+@media(max-width: 629px) {
+    .tag__list {
+        display: grid;
+        column-gap: 6px;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        align-content: center;
+    }
+}
 .tag__title {
     margin-bottom: 5px;
 }
@@ -16,4 +25,5 @@
     line-height: 1.3;
 }
 .tag__button {
+
 }

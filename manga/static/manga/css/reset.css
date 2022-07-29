@@ -66,6 +66,6 @@ input, textarea, select {
     -ms-user-select: none;
     user-select: none;
 }
-.noSelect:focus {
+.noSelect:focus, .noSelect:active{
     outline: none !important;
 }

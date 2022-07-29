@@ -4,3 +4,8 @@
 .sidebar:empty {
     display: none;
 }
+@media(max-width: 629px) {
+    .sidebar {
+        padding: 0 !important;
+    }
+}

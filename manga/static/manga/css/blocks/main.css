@@ -13,11 +13,11 @@
 .main__content {
     width: 100%;
 }
-@media (max-width: 629px) {
+/* @media (max-width: 629px) {
     .main__sidebar {
         display: none;
     }
-}
+} */
 .clearfix:after {
     content: "";
     display: table;

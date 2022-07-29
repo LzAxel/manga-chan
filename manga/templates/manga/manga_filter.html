@@ -1,8 +1,11 @@
 <div class="filter__block">
+    <div class="filter__menu">
+        <button class="button button--outline filter__button">Фильтры</button>
+    </div>
     <form method="get" action="{% url 'catalog' %}" class="filter__form">
         <div class="tag__block">
+            <h1 class="content-block__header">Теги</h1>
             <div class="tag__list">
-                <h1 class="content-block__header">Теги</h1>
                     {% for tag in tags %}
                         <div class="tag__item">
                             <label class="form__label">
@@ -28,7 +31,10 @@
                     <p>NSFW</p>
                 </label>
             </div>
+        </div>
+        <div class="filter__buttons">
             <button type="submit" onClick="this.form.reset()" class="tag__button button button--inner">Сбросить</button>
-        <button type="submit" class="tag__button button button--outline">Применить</button>
+            <button type="submit" class="tag__button button button--outline">Применить</button>
+        </div>
     </form> 
 </div>
