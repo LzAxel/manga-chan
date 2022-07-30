@@ -10,7 +10,7 @@
     font-family: 'Macondo', cursive;
     font-size: 19px;
     position: relative;
-    z-index: 5;
+    z-index: 10;
 }
 
 .menu__list {
@@ -30,7 +30,7 @@
         background-color: var(--item-color);
         flex-direction: column;
         justify-content: space-between;
-        z-index: 3;
+        z-index: 8;
         row-gap: 5px;
         padding: 0 5px;
         padding-top: 45px;
@@ -71,7 +71,7 @@
         display: block;
         position: relative;
         align-self: center;
-        z-index: 4;
+        z-index: 9;
     }
 
     .menu__burger.active::before {
@@ -148,3 +148,9 @@
         width: 100%;
     }
 } 
+.menu__title {
+    align-self: start;
+    color: var(--accent-color);
+    padding: 2px 0 !important;
+    margin: 0 !important;
+}
