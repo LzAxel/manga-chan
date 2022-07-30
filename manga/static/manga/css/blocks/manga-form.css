@@ -10,6 +10,6 @@
 .form__label {
     display: flex;
     column-gap: 5px;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
 }

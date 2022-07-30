@@ -19,9 +19,10 @@
 }
 .content-block__title {
     font-size: 18px;
-    text-align: center;
     background-color: var(--item-color);
-    padding: 5px 0;
+    padding: 5px 7px;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    white-space: nowrap;
+    width: min-content;
 }

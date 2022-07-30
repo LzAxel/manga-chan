@@ -3,14 +3,19 @@
 {% load form_tags %}
 
 {% block content %}
-<div class="login">
-    <form action="{% url 'login' %}" method="post" class="manga-form"
+<h1 class="page-title">Авторизация</h1>
+<div class="login content-block">
+    
+    <form action="{% url 'login' %}" method="post" class="login-form manga-form"
         enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             {{ field }}
         {% endfor %}
-        <button class="button button--outline" type="submit">Войти</button>
+        <div class="login-form__buttons">
+            <button class="button button--outline login-form__button" type="submit">Войти</button>
+            <button class="button login-form__button" type="submit">Забыли пароль?</button>
+        </div>
     </form>
 </div>
 
