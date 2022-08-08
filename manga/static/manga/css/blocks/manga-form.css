@@ -13,3 +13,14 @@
     align-items: flex-start;
     position: relative;
 }
+.manga-form__input > .errorlist {
+    margin-top: 8px;
+}
+.errorlist {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+    font-size: 14px;
+    color: tomato;
+    line-height: 1.2;
+}
