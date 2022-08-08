@@ -4,7 +4,9 @@
 <div class="catalog-manga__item">
     {% if manga.images %}
         {% if manga.nsfw %}
-            <a href="{{ manga.get_absolute_url }}" class="catalog-manga__nsfw catalog-manga__image content-block" style="background-image: url('{{ manga.images.first.image.url }}');"></a>
+            <div class="blur">
+                <a href="{{ manga.get_absolute_url }}" class="catalog-manga__nsfw catalog-manga__image content-block" style="background-image: url('{{ manga.images.first.image.url }}');"></a>
+            </div>
         {% else %}
             <a href="{{ manga.get_absolute_url }}" class="catalog-manga__image content-block" style="background-image: url('{{ manga.images.first.image.url }}');"></a>
         {% endif %}

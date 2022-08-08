@@ -34,7 +34,7 @@
 .manga__image {
     display: block;
     width: 100px;
-    height: auto;
+    height: 100%;
     border-radius: 5px;
     object-fit: cover;
 }
@@ -49,9 +49,13 @@
 }
 
 @media(max-width:767px) and (min-width:425px) {
-    .manga__image:nth-child(2) {
+    .manga__preview > .blur:nth-child(2){
         display: none;
     }
+    .manga__preview > .manga__image:nth-child(2){
+        display: none;
+    }
+    
 }
 
 .manga__info {

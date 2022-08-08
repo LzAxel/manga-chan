@@ -6,7 +6,9 @@
     <div class="manga__preview">
         {% for image in manga.images.all|slice:":2" %}
             {% if manga.nsfw %}
-                <img class="manga__image nsfw" src="{{ image.image.url }}" alt="">
+                <div class="blur">
+                    <img class="manga__image" src="{{ image.image.url }}" alt="">
+                </div>
             {% else %}
                 <img class="manga__image" src="{{ image.image.url }}" alt="">
             {% endif %}
